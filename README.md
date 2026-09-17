@@ -1,1 +1,393 @@
-# Circular-Coffee_NET
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circular-Coffee Net — Simulation Dashboard</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <!-- Tailwind CSS CDN with Custom Theme Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              forest: '#183827',
+              forestLight: '#245239',
+              forestDark: '#0E2419',
+              coffee: '#7B4B2A',
+              coffeeLight: '#9E6740',
+              beige: '#F7F5F0',
+              sand: '#EFEBE2',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-brand-beige text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-brand-coffee/20 selection:text-brand-forestDark">
+
+  <!-- Top Navigation Bar -->
+  <header class="bg-white/80 backdrop-blur-md border-b border-brand-sand/80 sticky top-0 z-30 px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-brand-forest flex items-center justify-center text-emerald-300 shadow-sm shadow-brand-forest/20">
+        <i class="ph-bold ph-coffee text-xl"></i>
+      </div>
+      <div>
+        <h1 class="text-lg font-bold text-brand-forest tracking-tight leading-tight">Circular-Coffee Net</h1>
+        <p class="text-xs text-slate-500 font-medium">Spent Coffee Ground (SCG) Biopellet Conversion Platform</p>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Simulation Engine v1.0
+      </span>
+    </div>
+  </header>
+
+  <!-- Main Container Layout: 2 Columns -->
+  <div class="flex-1 flex flex-col lg:flex-row max-w-[1600px] w-full mx-auto p-4 sm:p-6 lg:p-8 gap-6">
+
+    <!-- 1. SIDEBAR: Input Parameters Panel -->
+    <aside class="w-full lg:w-[380px] shrink-0">
+      <div class="bg-white rounded-xl shadow-sm border border-brand-sand p-6 sticky top-24">
+        <div class="flex items-center justify-between pb-5 mb-5 border-b border-slate-100">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-brand-sand flex items-center justify-center text-brand-coffee">
+              <i class="ph-bold ph-sliders-horizontal text-lg"></i>
+            </div>
+            <div>
+              <h2 class="font-semibold text-brand-forest text-base leading-tight">Parameter Input</h2>
+              <p class="text-xs text-slate-400">Atur variabel rantai pasok</p>
+            </div>
+          </div>
+          <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-brand-beige text-brand-coffee">Variabel</span>
+        </div>
+
+        <form class="space-y-4" onsubmit="event.preventDefault();">
+          <div>
+            <label for="inputShops" class="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
+              <span>Coffee Shops</span>
+              <span class="text-[11px] text-slate-400 font-normal">Mitra Kedai</span>
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <i class="ph ph-storefront text-lg"></i>
+              </div>
+              <input type="number" id="inputShops" placeholder="cth: 25" class="w-full pl-10 pr-4 py-2.5 bg-brand-beige/50 hover:bg-white focus:bg-white text-sm rounded-lg border border-slate-200 focus:border-brand-forest focus:ring-2 focus:ring-brand-forest/10 transition outline-none font-medium text-slate-800" />
+            </div>
+          </div>
+
+          <div>
+            <label for="inputScg" class="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
+              <span>SCG per Shop</span>
+              <span class="text-[11px] text-slate-400 font-normal">kg/hari</span>
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <i class="ph ph-grains text-lg"></i>
+              </div>
+              <input type="number" step="0.1" id="inputScg" placeholder="cth: 5" class="w-full pl-10 pr-4 py-2.5 bg-brand-beige/50 hover:bg-white focus:bg-white text-sm rounded-lg border border-slate-200 focus:border-brand-forest focus:ring-2 focus:ring-brand-forest/10 transition outline-none font-medium text-slate-800" />
+            </div>
+          </div>
+
+          <div>
+            <label for="inputRadius" class="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
+              <span>Logistics Radius</span>
+              <span class="text-[11px] text-slate-400 font-normal">Radius (km)</span>
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <i class="ph ph-map-pin-line text-lg"></i>
+              </div>
+              <input type="number" step="0.5" id="inputRadius" placeholder="cth: 10" class="w-full pl-10 pr-4 py-2.5 bg-brand-beige/50 hover:bg-white focus:bg-white text-sm rounded-lg border border-slate-200 focus:border-brand-forest focus:ring-2 focus:ring-brand-forest/10 transition outline-none font-medium text-slate-800" />
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="h-px bg-slate-100 flex-1"></div>
+              <span class="text-[11px] font-semibold text-brand-coffee tracking-wide uppercase">Rasio Campuran Biomassa</span>
+              <div class="h-px bg-slate-100 flex-1"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="inputScgPercent" class="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
+                <span>Proporsi Ampas Kopi (SCG)</span>
+                <span class="text-[11px] text-slate-400 font-normal">%</span>
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                  <i class="ph ph-percent text-lg"></i>
+                </div>
+                <input type="number" id="inputScgPercent" placeholder="cth: 50" min="0" max="100" class="w-full pl-10 pr-4 py-2.5 bg-brand-beige/50 hover:bg-white focus:bg-white text-sm rounded-lg border border-slate-200 focus:border-brand-forest focus:ring-2 focus:ring-brand-forest/10 transition outline-none font-medium text-slate-800" />
+              </div>
+            </div>
+
+            <div>
+              <label for="inputWoodPercent" class="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
+                <span>Proporsi Serbuk Kayu</span>
+                <span class="text-[11px] text-slate-400 font-normal">%</span>
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                  <i class="ph ph-tree text-lg"></i>
+                </div>
+                <input type="number" id="inputWoodPercent" placeholder="cth: 50" min="0" max="100" class="w-full pl-10 pr-4 py-2.5 bg-brand-beige/50 hover:bg-white focus:bg-white text-sm rounded-lg border border-slate-200 focus:border-brand-forest focus:ring-2 focus:ring-brand-forest/10 transition outline-none font-medium text-slate-800" />
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4">
+            <button type="button" id="btnSimulate" class="w-full py-3.5 px-6 rounded-xl bg-brand-forest hover:bg-brand-forestLight active:scale-[0.99] text-white font-semibold text-sm tracking-wider uppercase transition-all duration-200 shadow-md shadow-brand-forest/25 hover:shadow-lg hover:shadow-brand-forest/35 flex items-center justify-center gap-2 group cursor-pointer">
+              <i class="ph-bold ph-play-circle text-xl text-emerald-300 group-hover:rotate-12 transition-transform duration-200"></i>
+              <span>Simulate</span>
+            </button>
+            <p class="text-[11px] text-center text-slate-400 mt-2">Kalkulasi neraca massa, energi, & kelayakan ekonomi</p>
+          </div>
+        </form>
+      </div>
+    </aside>
+
+    <!-- 2. MAIN AREA: Output Metrics Panel -->
+    <main class="flex-1 space-y-6">
+      <section class="bg-gradient-to-r from-emerald-50 via-teal-50/70 to-amber-50/60 rounded-xl p-6 border border-emerald-200/80 shadow-sm relative overflow-hidden">
+        <div class="absolute -right-8 -top-8 w-36 h-36 bg-emerald-200/30 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-emerald-600 border border-emerald-100 shrink-0">
+              <i class="ph-bold ph-shield-check text-2xl"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold uppercase tracking-wider text-emerald-800">System Feasibility Assessment</span>
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900 mt-0.5">
+                <span id="outStatus">Waiting for input...</span>
+              </h3>
+              <p class="text-xs text-slate-600 mt-1 max-w-xl">
+                Masukkan parameter di sebelah kiri lalu klik Simulate untuk melihat hasil kelayakan.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="flex items-center gap-2 mb-3 px-1">
+          <i class="ph-bold ph-scales text-brand-coffee text-base"></i>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600">Neraca Massa & Konversi SCG</h3>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="bg-white rounded-xl p-5 border border-brand-sand shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between text-slate-400 mb-3">
+              <span class="text-xs font-medium text-slate-500">Total SCG Wet Feedstock</span>
+              <div class="w-9 h-9 rounded-lg bg-amber-50 text-brand-coffee flex items-center justify-center">
+                <i class="ph-bold ph-trash text-lg"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span id="outTotalScg" class="text-2xl font-bold text-slate-900 tracking-tight">0.0</span>
+              <span class="text-xs font-medium text-slate-500">kg/day</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-5 border border-brand-sand shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between text-slate-400 mb-3">
+              <span class="text-xs font-medium text-slate-500">Dry SCG (Est. Post-Drying)</span>
+              <div class="w-9 h-9 rounded-lg bg-orange-50 text-orange-700 flex items-center justify-center">
+                <i class="ph-bold ph-sun-horizon text-lg"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span id="outDryScg" class="text-2xl font-bold text-slate-900 tracking-tight">0.0</span>
+              <span class="text-xs font-medium text-slate-500">kg/day</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-5 border border-brand-sand shadow-sm hover:shadow-md transition-shadow sm:col-span-2 lg:col-span-1">
+            <div class="flex items-center justify-between text-slate-400 mb-3">
+              <span class="text-xs font-medium text-slate-500">Biopellet Total Output</span>
+              <div class="w-9 h-9 rounded-lg bg-emerald-50 text-brand-forest flex items-center justify-center">
+                <i class="ph-bold ph-package text-lg"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span id="outBiopellet" class="text-2xl font-bold text-brand-forest tracking-tight">0.0</span>
+              <span class="text-xs font-medium text-slate-500">kg/day</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="flex items-center gap-2 mb-3 px-1">
+          <i class="ph-bold ph-lightning text-amber-600 text-base"></i>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600">Nilai Kalor & Subsitusi Energi</h3>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-white rounded-xl p-5 border border-brand-sand shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between text-slate-400 mb-3">
+              <span class="text-xs font-medium text-slate-500">Total Energy Equivalent</span>
+              <div class="w-9 h-9 rounded-lg bg-yellow-50 text-yellow-700 flex items-center justify-center">
+                <i class="ph-bold ph-fire text-lg"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span id="outEnergy" class="text-2xl font-bold text-slate-900 tracking-tight">0</span>
+              <span class="text-xs font-medium text-slate-500">MJ/day</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-5 border border-brand-sand shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between text-slate-400 mb-3">
+              <span class="text-xs font-medium text-slate-500">LPG Substitution Potential</span>
+              <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
+                <i class="ph-bold ph-gas-can text-lg"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span id="outLpg" class="text-2xl font-bold text-slate-900 tracking-tight">0.0</span>
+              <span class="text-xs font-medium text-slate-500">kg/day</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="flex items-center gap-2 mb-3 px-1">
+          <i class="ph-bold ph-currency-circle-dollar text-emerald-700 text-base"></i>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600">Kelayakan Finansial & Investasi</h3>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-white rounded-xl p-5 border border-brand-sand shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between text-slate-400 mb-3">
+              <span class="text-xs font-medium text-slate-500">Estimated HPP Produksi</span>
+              <div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center">
+                <i class="ph-bold ph-coins text-lg"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-sm font-semibold text-slate-500">Rp</span>
+              <span id="outHpp" class="text-2xl font-bold text-slate-900 tracking-tight">0</span>
+              <span class="text-xs font-medium text-slate-500">/kg</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-5 border border-brand-sand shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between text-slate-400 mb-3">
+              <span class="text-xs font-medium text-slate-500">Payback Period (PBP)</span>
+              <div class="w-9 h-9 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center">
+                <i class="ph-bold ph-chart-line-up text-lg"></i>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-1.5">
+              <span id="outPbp" class="text-2xl font-bold text-slate-900 tracking-tight">0.0</span>
+              <span class="text-xs font-medium text-slate-500">Tahun</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MESIN JAVASCRIPT SIMULASI -->
+  <script>
+    // Sinkronisasi otomatis persentase
+    document.getElementById('inputScgPercent').addEventListener('input', function(e) {
+        let scg = parseFloat(e.target.value) || 0;
+        if(scg <= 100) document.getElementById('inputWoodPercent').value = 100 - scg;
+    });
+    document.getElementById('inputWoodPercent').addEventListener('input', function(e) {
+        let wood = parseFloat(e.target.value) || 0;
+        if(wood <= 100) document.getElementById('inputScgPercent').value = 100 - wood;
+    });
+  
+    // Mesin Kalkulasi saat tombol SIMULATE diklik
+    document.getElementById('btnSimulate').addEventListener('click', function() {
+      // 1. Ambil Nilai dari Input Pengguna
+      const shops = parseFloat(document.getElementById('inputShops').value) || 0;
+      const scgPerShop = parseFloat(document.getElementById('inputScg').value) || 0;
+      const radius = parseFloat(document.getElementById('inputRadius').value) || 0;
+      const scgPercent = parseFloat(document.getElementById('inputScgPercent').value) || 0;
+      const woodPercent = parseFloat(document.getElementById('inputWoodPercent').value) || 0;
+  
+      // 2. Konstanta Dasar
+      const daysPerYear = 300;
+      const CAPEX = 120000000;
+      const maintenanceAnnual = 0.05 * CAPEX; 
+      const laborAnnual = 66271944; 
+      const depreciation = CAPEX / 10; 
+      const woodPrice = 2500;
+      const lpgPrice = 18333;
+      const listrikPrice = 1444.70;
+  
+      // 3. Perhitungan Neraca Massa
+      const dryScg = shops * scgPerShop * 0.91; 
+      const wetScg = dryScg / (1 - 0.60); 
+      const waterRemoved = wetScg - (dryScg / (1 - 0.10)); 
+      
+      const totalMixDry = scgPercent > 0 ? (dryScg / (scgPercent / 100)) : 0;
+      const woodAdded = totalMixDry * (woodPercent / 100);
+      
+      const biopellet = totalMixDry * 0.90; 
+      const energy = biopellet * 19.12; 
+      const lpgEq = energy / 46; 
+  
+      // 4. Perhitungan Tekno-Ekonomi
+      const transportDaily = (radius / 10) * 250000;
+      const transportAnnual = transportDaily * daysPerYear;
+      
+      const woodAnnual = woodAdded * daysPerYear * woodPrice;
+      const dryingAnnual = waterRemoved * daysPerYear * 0.95 * listrikPrice;
+      const electAnnual = biopellet * daysPerYear * 0.10 * listrikPrice;
+      
+      const OPEX = transportAnnual + dryingAnnual + electAnnual + woodAnnual + laborAnnual + maintenanceAnnual;
+      const annualPellet = biopellet * daysPerYear;
+      
+      const HPP = annualPellet > 0 ? (OPEX + depreciation) / annualPellet : 0;
+      const benefitAnnual = lpgEq * daysPerYear * lpgPrice;
+      const netBenefit = benefitAnnual - OPEX;
+      
+      const PBP = netBenefit > 0 ? (CAPEX / netBenefit).toFixed(1) : "N/A";
+      const status = netBenefit > 0 ? "Feasible" : "Needs Optimization";
+  
+      // 5. Tampilkan Hasil ke Desain (UI)
+      document.getElementById('outTotalScg').innerText = wetScg.toFixed(1);
+      document.getElementById('outDryScg').innerText = dryScg.toFixed(1);
+      document.getElementById('outBiopellet').innerText = biopellet.toFixed(1);
+      document.getElementById('outEnergy').innerText = Math.round(energy).toLocaleString('en-US');
+      document.getElementById('outLpg').innerText = lpgEq.toFixed(1);
+      
+      document.getElementById('outHpp').innerText = Math.round(HPP).toLocaleString('id-ID');
+      document.getElementById('outPbp').innerText = PBP;
+      document.getElementById('outStatus').innerText = status;
+      
+      if(netBenefit > 0) {
+          document.getElementById('outStatus').className = "text-emerald-700 font-bold";
+      } else {
+          document.getElementById('outStatus').className = "text-amber-600 font-bold";
+      }
+    });
+  </script>
+</body>
+</html>
